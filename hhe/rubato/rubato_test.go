@@ -1,8 +1,8 @@
 package rubato
 
 import (
-	ckks "HHESoK/rtf_ckks_integration/ckks_fv"
-	"HHESoK/sym/rubato"
+	ckks "HHELand/rtf_ckks_integration/ckks_fv"
+	"HHELand/sym/rubato"
 	"encoding/binary"
 	"fmt"
 	"math"

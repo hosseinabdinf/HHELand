@@ -3,9 +3,9 @@ package dbfv
 import (
 	"encoding/binary"
 
-	"HHESoK/rtf_ckks_integration/bfv"
-	"HHESoK/rtf_ckks_integration/ring"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/bfv"
+	"HHELand/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 // RefreshProtocol is a struct storing the relevant parameters for the Refresh protocol.

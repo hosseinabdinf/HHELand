@@ -3,7 +3,7 @@ package ckks_fv
 import (
 	"fmt"
 
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ring"
 	"golang.org/x/crypto/sha3"
 )
 

@@ -5,8 +5,8 @@ import (
 	"math"
 	"math/cmplx"
 
-	"HHESoK/rtf_ckks_integration/ckks"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/ckks"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 func chebyshevinterpolation() {

@@ -5,8 +5,8 @@ import (
 	"math"
 	"math/cmplx"
 
-	"HHESoK/rtf_ckks_integration/ckks/bettersine"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/ckks/bettersine"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 // Bootstrapper is a struct to stores a memory pool the plaintext matrices

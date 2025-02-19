@@ -6,8 +6,8 @@ import (
 	"math"
 	"math/bits"
 
-	"HHESoK/rtf_ckks_integration/ring"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 // MaxLogN is the log2 of the largest supported polynomial modulus degree.

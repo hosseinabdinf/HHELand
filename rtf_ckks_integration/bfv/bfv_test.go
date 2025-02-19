@@ -1,8 +1,8 @@
 package bfv
 
 import (
-	"HHESoK/rtf_ckks_integration/ring"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/utils"
 	"flag"
 	"fmt"
 	"testing"

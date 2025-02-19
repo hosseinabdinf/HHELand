@@ -3,9 +3,9 @@ package dckks
 import (
 	"math/big"
 
-	"HHESoK/rtf_ckks_integration/ckks"
-	"HHESoK/rtf_ckks_integration/ring"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/ckks"
+	"HHELand/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 // PermuteProtocol is a struct storing the parameters for the PermuteProtocol protocol.

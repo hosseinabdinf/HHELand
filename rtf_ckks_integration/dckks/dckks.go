@@ -1,8 +1,8 @@
 package dckks
 
 import (
-	"HHESoK/rtf_ckks_integration/ckks"
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ckks"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 type dckksContext struct {

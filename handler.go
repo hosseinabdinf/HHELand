@@ -1,7 +1,7 @@
 package HHESoK
 
 import (
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/utils"
 	"fmt"
 	"strings"
 )

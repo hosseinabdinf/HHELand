@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 	"math"
 
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 // GaussianSampler keeps the state of a truncated Gaussian polynomial sampler.

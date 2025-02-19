@@ -1,8 +1,8 @@
 package ckks_fv
 
 import (
-	"HHESoK/rtf_ckks_integration/ring"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 // Ciphertext is *ring.Poly array representing a polynomial of degree > 0 with coefficients in R_Q.

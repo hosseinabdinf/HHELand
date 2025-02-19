@@ -1,8 +1,8 @@
 package rubato
 
 import (
-	"HHESoK/rtf_ckks_integration/ckks_fv"
-	"HHESoK/sym/rubato"
+	"HHELand/rtf_ckks_integration/ckks_fv"
+	"HHELand/sym/rubato"
 	"crypto/rand"
 	"fmt"
 	"testing"

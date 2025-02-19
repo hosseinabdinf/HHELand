@@ -1,7 +1,7 @@
 package dckks
 
 import (
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 func extendBasisSmallNormAndCenter(ringQ, ringP *ring.Ring, polQ, polP *ring.Poly) {

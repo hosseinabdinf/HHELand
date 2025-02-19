@@ -4,7 +4,7 @@ import (
 	"math"
 	"math/bits"
 
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 // TernarySampler keeps the state of a polynomial sampler in the ternary distribution.

@@ -1,7 +1,7 @@
 package pasta
 
 import (
-	"HHESoK/sym/pasta"
+	"HHELand/sym/pasta"
 	"encoding/binary"
 	"fmt"
 	"testing"

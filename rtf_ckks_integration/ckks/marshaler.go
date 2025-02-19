@@ -5,7 +5,7 @@ import (
 	"errors"
 	"math"
 
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 // GetDataLen returns the length in bytes of the target Ciphertext.

@@ -1,8 +1,8 @@
 package dbfv
 
 import (
-	"HHESoK/rtf_ckks_integration/bfv"
-	"HHESoK/rtf_ckks_integration/drlwe"
+	"HHELand/rtf_ckks_integration/bfv"
+	"HHELand/rtf_ckks_integration/drlwe"
 )
 
 // RKGProtocol is the structure storing the parameters and state for a party in the collective relinearization key

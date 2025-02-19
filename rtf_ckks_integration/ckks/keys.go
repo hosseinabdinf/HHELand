@@ -1,6 +1,6 @@
 package ckks
 
-import "HHESoK/rtf_ckks_integration/rlwe"
+import "HHELand/rtf_ckks_integration/rlwe"
 
 // SecretKey is a type for CKKS secret keys.
 type SecretKey struct{ rlwe.SecretKey }

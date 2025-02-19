@@ -1,8 +1,8 @@
 package pasta
 
 import (
-	"HHESoK"
-	"HHESoK/sym/pasta"
+	"HHELand"
+	"HHELand/sym/pasta"
 	"encoding/binary"
 	"golang.org/x/crypto/sha3"
 	"math"

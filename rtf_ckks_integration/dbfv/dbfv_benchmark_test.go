@@ -3,10 +3,10 @@ package dbfv
 import (
 	"testing"
 
-	"HHESoK/rtf_ckks_integration/bfv"
-	"HHESoK/rtf_ckks_integration/drlwe"
-	"HHESoK/rtf_ckks_integration/ring"
-	"HHESoK/rtf_ckks_integration/rlwe"
+	"HHELand/rtf_ckks_integration/bfv"
+	"HHELand/rtf_ckks_integration/drlwe"
+	"HHELand/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/rlwe"
 )
 
 func Benchmark_DBFV(b *testing.B) {

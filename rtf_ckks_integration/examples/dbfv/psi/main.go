@@ -7,12 +7,12 @@ import (
 	"sync"
 	"time"
 
-	"HHESoK/rtf_ckks_integration/bfv"
-	"HHESoK/rtf_ckks_integration/dbfv"
-	"HHESoK/rtf_ckks_integration/drlwe"
-	"HHESoK/rtf_ckks_integration/ring"
-	"HHESoK/rtf_ckks_integration/rlwe"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/bfv"
+	"HHELand/rtf_ckks_integration/dbfv"
+	"HHELand/rtf_ckks_integration/drlwe"
+	"HHELand/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/rlwe"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 func check(err error) {

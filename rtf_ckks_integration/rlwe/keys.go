@@ -3,7 +3,7 @@ package rlwe
 import (
 	"encoding/binary"
 
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 // SecretKey is a type for generic RLWE secret keys.

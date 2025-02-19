@@ -9,11 +9,11 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"HHESoK/rtf_ckks_integration/ckks"
-	"HHESoK/rtf_ckks_integration/drlwe"
-	"HHESoK/rtf_ckks_integration/ring"
-	"HHESoK/rtf_ckks_integration/rlwe"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/ckks"
+	"HHELand/rtf_ckks_integration/drlwe"
+	"HHELand/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/rlwe"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 var flagLongTest = flag.Bool("long", false, "run the long test suite (all parameters). Overrides -short and requires -timeout=0.")

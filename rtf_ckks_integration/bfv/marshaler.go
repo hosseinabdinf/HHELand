@@ -1,7 +1,7 @@
 package bfv
 
 import (
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 // MarshalBinary encodes a Ciphertext in a byte slice.

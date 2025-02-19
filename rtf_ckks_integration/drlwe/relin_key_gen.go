@@ -4,9 +4,9 @@ import (
 	"errors"
 	"math"
 
-	"HHESoK/rtf_ckks_integration/ring"
-	"HHESoK/rtf_ckks_integration/rlwe"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/rlwe"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 // RelinearizationKeyGenerator is an interface describing the local steps of a generic RLWE RKG protocol

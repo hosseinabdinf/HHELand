@@ -1,10 +1,10 @@
 package rubato
 
 import (
-	"HHESoK"
-	ckks "HHESoK/rtf_ckks_integration/ckks_fv"
-	"HHESoK/rtf_ckks_integration/utils"
-	"HHESoK/sym/rubato"
+	"HHELand"
+	ckks "HHELand/rtf_ckks_integration/ckks_fv"
+	"HHELand/rtf_ckks_integration/utils"
+	"HHELand/sym/rubato"
 	"crypto/rand"
 	"math"
 )

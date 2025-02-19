@@ -6,8 +6,8 @@ import (
 	"runtime"
 	"testing"
 
-	"HHESoK/rtf_ckks_integration/ckks/bettersine"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/ckks/bettersine"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 func TestBootstrap(t *testing.T) {

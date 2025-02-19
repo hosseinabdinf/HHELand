@@ -4,7 +4,7 @@ import (
 	"math/bits"
 	"unsafe"
 
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 // GenGaloisParams generates the generators for the Galois endomorphisms.

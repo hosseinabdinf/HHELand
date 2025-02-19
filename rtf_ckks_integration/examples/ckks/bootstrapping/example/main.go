@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"math"
 
-	"HHESoK/rtf_ckks_integration/ckks"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/ckks"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 func main() {
@@ -23,7 +23,7 @@ func main() {
 
 	// Bootstrapping parameters
 	// Four sets of parameters (index 0 to 3) ensuring 128 bit of security
-	// are available in HHESoK/rtf_ckks_integration/ckks/bootstrap_params
+	// are available in HHELand/rtf_ckks_integration/ckks/bootstrap_params
 	// LogSlots is hardcoded to 15 in the parameters, but can be changed from 1 to 15.
 	// When changing logSlots make sure that the number of levels allocated to CtS and StC is
 	// smaller or equal to logSlots.

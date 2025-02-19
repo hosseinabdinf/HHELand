@@ -1,9 +1,9 @@
 package hera
 
 import (
-	"HHESoK"
-	"HHESoK/rtf_ckks_integration/ckks_fv"
-	"HHESoK/sym/hera"
+	"HHELand"
+	"HHELand/rtf_ckks_integration/ckks_fv"
+	"HHELand/sym/hera"
 	"fmt"
 	"testing"
 )

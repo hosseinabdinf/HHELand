@@ -1,7 +1,7 @@
 package ckks
 
 import (
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 // Plaintext is is a Element with only one Poly.

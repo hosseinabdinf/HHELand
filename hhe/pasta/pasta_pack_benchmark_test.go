@@ -1,8 +1,8 @@
 package pasta
 
 import (
-	"HHESoK"
-	"HHESoK/sym/pasta"
+	"HHELand"
+	"HHELand/sym/pasta"
 	"encoding/binary"
 	"fmt"
 	"github.com/tuneinsight/lattigo/v6/core/rlwe"
@@ -103,7 +103,7 @@ func benchHEPastaPack(tc TestContext, b *testing.B) {
 		}
 	})
 
-	//var ptRes HHESoK.Plaintext
+	//var ptRes HHELand.Plaintext
 	b.Run("PASTA/Decrypt", func(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {

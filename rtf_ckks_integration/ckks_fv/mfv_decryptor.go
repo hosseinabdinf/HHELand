@@ -1,7 +1,7 @@
 package ckks_fv
 
 import (
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 // MFVDecryptor is an interface for decryptors

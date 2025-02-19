@@ -1,8 +1,8 @@
 package dbfv
 
 import (
-	"HHESoK/rtf_ckks_integration/bfv"
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/bfv"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 type dbfvContext struct {

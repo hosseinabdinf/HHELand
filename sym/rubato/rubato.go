@@ -1,10 +1,10 @@
 package rubato
 
 import (
-	"HHESoK"
-	"HHESoK/rtf_ckks_integration/ckks_fv"
-	"HHESoK/rtf_ckks_integration/ring"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand"
+	"HHELand/rtf_ckks_integration/ckks_fv"
+	"HHELand/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/utils"
 	"golang.org/x/crypto/sha3"
 )
 

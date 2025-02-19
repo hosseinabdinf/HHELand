@@ -6,7 +6,7 @@ import (
 	"math/big"
 	"math/bits"
 
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 // Returns uniform random value in (0,q) by rejection sampling

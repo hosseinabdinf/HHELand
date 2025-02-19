@@ -10,7 +10,7 @@ import (
 	"math/big"
 	"math/bits"
 
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 // Ring is a structure that keeps all the variables required to operate on a polynomial represented in this ring.

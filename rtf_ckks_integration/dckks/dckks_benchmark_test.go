@@ -3,10 +3,10 @@ package dckks
 import (
 	"testing"
 
-	"HHESoK/rtf_ckks_integration/ckks"
-	"HHESoK/rtf_ckks_integration/drlwe"
-	"HHESoK/rtf_ckks_integration/ring"
-	"HHESoK/rtf_ckks_integration/rlwe"
+	"HHELand/rtf_ckks_integration/ckks"
+	"HHELand/rtf_ckks_integration/drlwe"
+	"HHELand/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/rlwe"
 )
 
 func BenchmarkDCKKS(b *testing.B) {

@@ -1,7 +1,7 @@
 package bfv
 
 import (
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 // Plaintext is a Element with only one Poly. It represents a Plaintext element in R_q that is the

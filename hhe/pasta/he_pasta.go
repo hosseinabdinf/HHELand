@@ -1,8 +1,8 @@
 package pasta
 
 import (
-	"HHESoK"
-	"HHESoK/sym/pasta"
+	"HHELand"
+	"HHELand/sym/pasta"
 	"fmt"
 	"github.com/tuneinsight/lattigo/v6/core/rlwe"
 	"github.com/tuneinsight/lattigo/v6/schemes/bgv"

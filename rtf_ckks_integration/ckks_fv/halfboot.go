@@ -3,7 +3,7 @@ package ckks_fv
 import (
 	"math"
 
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 // Halfboot follows bootstrapping process except the last StC step.

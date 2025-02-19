@@ -1,10 +1,10 @@
 package hera
 
 import (
-	"HHESoK"
-	ckks "HHESoK/rtf_ckks_integration/ckks_fv"
-	"HHESoK/rtf_ckks_integration/utils"
-	"HHESoK/sym/hera"
+	"HHELand"
+	ckks "HHELand/rtf_ckks_integration/ckks_fv"
+	"HHELand/rtf_ckks_integration/utils"
+	"HHELand/sym/hera"
 	"crypto/rand"
 	"math"
 )

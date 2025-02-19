@@ -6,7 +6,7 @@ import (
 	"math/cmplx"
 	"time"
 
-	"HHESoK/rtf_ckks_integration/ckks"
+	"HHELand/rtf_ckks_integration/ckks"
 )
 
 func example() {

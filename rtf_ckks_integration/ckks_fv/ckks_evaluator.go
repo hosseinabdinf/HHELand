@@ -6,9 +6,9 @@ import (
 	"math"
 	"unsafe"
 
-	"HHESoK/rtf_ckks_integration/ring"
-	"HHESoK/rtf_ckks_integration/rlwe"
-	"HHESoK/rtf_ckks_integration/utils"
+	"HHELand/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/rlwe"
+	"HHELand/rtf_ckks_integration/utils"
 )
 
 // CKKSEvaluator is an interface implementing the methodes to conduct homomorphic operations between ciphertext and/or plaintexts.

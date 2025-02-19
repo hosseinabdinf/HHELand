@@ -1,6 +1,6 @@
 package bfv
 
-import "HHESoK/rtf_ckks_integration/rlwe"
+import "HHELand/rtf_ckks_integration/rlwe"
 
 // SecretKey is a type for BFV secret keys.
 type SecretKey struct{ rlwe.SecretKey }

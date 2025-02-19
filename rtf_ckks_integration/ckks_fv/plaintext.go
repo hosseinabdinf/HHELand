@@ -1,6 +1,6 @@
 package ckks_fv
 
-import "HHESoK/rtf_ckks_integration/ring"
+import "HHELand/rtf_ckks_integration/ring"
 
 // PlaintextCKKS is is a Element with only one Poly.
 type Plaintext struct {

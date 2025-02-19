@@ -1,9 +1,9 @@
 package dckks
 
 import (
-	"HHESoK/rtf_ckks_integration/ckks"
-	"HHESoK/rtf_ckks_integration/drlwe"
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ckks"
+	"HHELand/rtf_ckks_integration/drlwe"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 // RTGProtocol is the structure storing the parameters for the collective rotation-keys generation.

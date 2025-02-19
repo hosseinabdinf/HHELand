@@ -3,7 +3,7 @@ package ckks
 import (
 	"fmt"
 
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 // Operand is a common interface for Ciphertext and Plaintext types.

@@ -1,7 +1,7 @@
 package ckks
 
 import (
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ring"
 	"math"
 	"math/big"
 )

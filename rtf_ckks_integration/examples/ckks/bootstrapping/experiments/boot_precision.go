@@ -11,7 +11,7 @@ import (
 	"runtime"
 	"text/template"
 
-	"HHESoK/rtf_ckks_integration/ckks"
+	"HHELand/rtf_ckks_integration/ckks"
 )
 
 var err error

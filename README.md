@@ -1,8 +1,11 @@
 # HHESoK
+
 Implementation for SoK: Exploring the Landscape of Hybrid Homomorphic Encryption
 
 # Testing Instruction
+
 ## HE-friendly ciphers
+
 To test each symmetric cipher, navigate to its respective directory:
 
     $ cd ./symcips/CNAME/
@@ -25,6 +28,7 @@ available, from the following list:
     - Rubato:   Rubato cipher
 
 ## HHE scheme
+
 To test each HHE scheme, navigate to its respective directory:
 
     $ cd ./hhe/CNAME/

@@ -4,7 +4,7 @@ import (
 	"math"
 	"math/big"
 
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 type MFVNoiseEstimator interface {

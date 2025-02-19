@@ -2,9 +2,9 @@
 package dckks
 
 import (
-	"HHESoK/rtf_ckks_integration/ckks"
-	"HHESoK/rtf_ckks_integration/drlwe"
-	"HHESoK/rtf_ckks_integration/ring"
+	"HHELand/rtf_ckks_integration/ckks"
+	"HHELand/rtf_ckks_integration/drlwe"
+	"HHELand/rtf_ckks_integration/ring"
 )
 
 // CKGProtocol is the structure storing the parameters and state for a party in the collective key generation protocol.
