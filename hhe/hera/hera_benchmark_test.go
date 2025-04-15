@@ -1,9 +1,9 @@
 package hera
 
 import (
-	"HHELand"
-	"HHELand/rtf_ckks_integration/ckks_fv"
+	"HHELand/rtf_integration"
 	"HHELand/sym/hera"
+	"HHELand/utils"
 	"fmt"
 	"testing"
 )
@@ -30,7 +30,7 @@ func benchHEHera(tc hera.TestContext, b *testing.B) {
 		b.Skip("skipping benchmark in short mode.")
 	}
 
-	logger := HHESoK.NewLogger(HHESoK.DEBUG)
+	logger := utils.NewLogger(utils.DEBUG)
 	logger.PrintDataLen(tc.Key)
 
 	heHera := NewHEHera()
@@ -124,7 +124,7 @@ func benchHEHera(tc hera.TestContext, b *testing.B) {
 	})
 
 	// get BFV key stream using encrypted symmetric key, nonce, and counter on the server side
-	var fvKeyStreams []*ckks_fv.Ciphertext
+	var fvKeyStreams []*RtF.Ciphertext
 	b.Run("HERA/FVKeyStream", func(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {

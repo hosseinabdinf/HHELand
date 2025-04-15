@@ -9,21 +9,21 @@ import (
 
 type Pasta interface {
 	NewEncryptor() Encryptor
-	KeyStream(nonce []byte, counter []byte) HHESoK.Block
+	KeyStream(nonce []byte, counter []byte) HHELand.Block
 }
 
 type pasta struct {
 	params       Parameter
 	shake        sha3.ShakeHash
-	secretKey    HHESoK.Key
-	state1       HHESoK.Block
-	state2       HHESoK.Block
+	secretKey    HHELand.Key
+	state1       HHELand.Block
+	state2       HHELand.Block
 	p            uint64
 	maxPrimeSize uint64
 }
 
 // NewPasta return a new instance of pasta cipher
-func NewPasta(secretKey HHESoK.Key, params Parameter) Pasta {
+func NewPasta(secretKey HHELand.Key, params Parameter) Pasta {
 	if len(secretKey) != params.GetKeySize() {
 		panic("Invalid Key Length!")
 	}
@@ -41,8 +41,8 @@ func NewPasta(secretKey HHESoK.Key, params Parameter) Pasta {
 	mps = (1 << mps) - 1
 
 	// init empty states
-	state1 := make(HHESoK.Block, params.GetBlockSize())
-	state2 := make(HHESoK.Block, params.GetBlockSize())
+	state1 := make(HHELand.Block, params.GetBlockSize())
+	state2 := make(HHELand.Block, params.GetBlockSize())
 
 	// create a new pasta instance
 	pas := &pasta{
@@ -74,10 +74,10 @@ func (pas *pasta) prepareOneBlock() {
 func (pas *pasta) preProcess(nonce []byte, counter []byte) {
 	numRounds := pas.params.GetRounds()
 	pas.initShake(nonce, counter)
-	mats1 := make(HHESoK.Vector3D, numRounds+1)
-	mats2 := make(HHESoK.Vector3D, numRounds+1)
-	rcs1 := make(HHESoK.Matrix, numRounds+1)
-	rcs2 := make(HHESoK.Matrix, numRounds+1)
+	mats1 := make(HHELand.Vector3D, numRounds+1)
+	mats2 := make(HHELand.Vector3D, numRounds+1)
+	rcs1 := make(HHELand.Matrix, numRounds+1)
+	rcs2 := make(HHELand.Matrix, numRounds+1)
 
 	for r := 0; r <= numRounds; r++ {
 		mats1[r] = pas.getRandomMatrix()
@@ -88,7 +88,7 @@ func (pas *pasta) preProcess(nonce []byte, counter []byte) {
 }
 
 // KeyStream generate pasta secretKey stream based on nonce and counter
-func (pas *pasta) KeyStream(nonce []byte, counter []byte) HHESoK.Block {
+func (pas *pasta) KeyStream(nonce []byte, counter []byte) HHELand.Block {
 	pas.initShake(nonce, counter)
 	ps := pas.params.GetBlockSize()
 
@@ -125,7 +125,7 @@ func (pas *pasta) round(r int) {
 }
 
 // sBoxCube state[i] := (state[i] ^ 3)
-func (pas *pasta) sBoxCube(state *HHESoK.Block) {
+func (pas *pasta) sBoxCube(state *HHELand.Block) {
 	modulus := new(big.Int).SetUint64(pas.params.GetModulus())
 	for i := 0; i < pas.params.GetBlockSize(); i++ {
 		// square = state ^ 2 (mod p)
@@ -142,11 +142,11 @@ func (pas *pasta) sBoxCube(state *HHESoK.Block) {
 }
 
 // sBoxFeistel state[i] := {i = 0; state[i];state[i] + (state[i-1] ^ 2)}
-func (pas *pasta) sBoxFeistel(state *HHESoK.Block) {
+func (pas *pasta) sBoxFeistel(state *HHELand.Block) {
 	ps := pas.params.GetBlockSize()
 	modulus := new(big.Int).SetUint64(pas.params.GetModulus())
 
-	nState := make(HHESoK.Block, ps)
+	nState := make(HHELand.Block, ps)
 	nState[0] = (*state)[0]
 
 	for i := 1; i < ps; i++ {
@@ -179,10 +179,10 @@ func (pas *pasta) linearLayer() {
 
 // matmul implementation of matrix multiplication
 // requires storage of two row in the matrix
-func (pas *pasta) matmul(state *HHESoK.Block) {
+func (pas *pasta) matmul(state *HHELand.Block) {
 	ps := pas.params.GetBlockSize()
 	modulus := new(big.Int).SetUint64(pas.params.GetModulus())
-	newState := make(HHESoK.Block, ps)
+	newState := make(HHELand.Block, ps)
 	rand := pas.getRandomVector(false)
 	var currentRow = rand
 
@@ -205,7 +205,7 @@ func (pas *pasta) matmul(state *HHESoK.Block) {
 }
 
 // addRC add state with a random field element
-func (pas *pasta) addRC(state *HHESoK.Block) {
+func (pas *pasta) addRC(state *HHELand.Block) {
 	ps := pas.params.GetBlockSize()
 	modulus := new(big.Int).SetUint64(pas.params.GetModulus())
 
@@ -289,9 +289,9 @@ func (pas *pasta) generateRandomFieldElement(allowZero bool) uint64 {
 }
 
 // getRandomVector generate random Block with the same size as plaintext
-func (pas *pasta) getRandomVector(allowZero bool) HHESoK.Block {
+func (pas *pasta) getRandomVector(allowZero bool) HHELand.Block {
 	ps := pas.params.GetBlockSize()
-	rc := make(HHESoK.Block, ps)
+	rc := make(HHELand.Block, ps)
 	for i := 0; i < ps; i++ {
 		rc[i] = pas.generateRandomFieldElement(allowZero)
 	}
@@ -308,11 +308,11 @@ func (pas *pasta) getRandomVector(allowZero bool) HHESoK.Block {
 */
 
 // GetRandomMatrix generate a random invertible matrix
-func (pas *pasta) getRandomMatrix() HHESoK.Matrix {
+func (pas *pasta) getRandomMatrix() HHELand.Matrix {
 	ps := pas.params.GetBlockSize()
-	mat := make(HHESoK.Matrix, ps) // mat[ps][ps]
+	mat := make(HHELand.Matrix, ps) // mat[ps][ps]
 	for i := range mat {
-		mat[i] = make(HHESoK.Block, ps) // mat[i] = [ps]
+		mat[i] = make(HHELand.Block, ps) // mat[i] = [ps]
 	}
 	mat[0] = pas.getRandomVector(false)
 	for j := 1; j < ps; j++ {
@@ -322,9 +322,9 @@ func (pas *pasta) getRandomMatrix() HHESoK.Matrix {
 }
 
 // GetRcVector return a vector of random elements, the vector size will be (size+plainSize)
-func (pas *pasta) getRcVector(size int) HHESoK.Block {
+func (pas *pasta) getRcVector(size int) HHELand.Block {
 	ps := pas.params.GetBlockSize()
-	rc := make(HHESoK.Block, size+ps)
+	rc := make(HHELand.Block, size+ps)
 	for i := 0; i < ps; i++ {
 		rc[i] = pas.generateRandomFieldElement(false)
 	}
@@ -335,10 +335,10 @@ func (pas *pasta) getRcVector(size int) HHESoK.Block {
 }
 
 // calculateRow
-func (pas *pasta) calculateRow(previousRow, firstRow HHESoK.Block) HHESoK.Block {
+func (pas *pasta) calculateRow(previousRow, firstRow HHELand.Block) HHELand.Block {
 	ps := pas.params.GetBlockSize()
 	modulus := new(big.Int).SetUint64(pas.params.GetModulus())
-	output := make(HHESoK.Block, ps)
+	output := make(HHELand.Block, ps)
 	// =======================================
 	pRow := new(big.Int).SetUint64(previousRow[ps-1])
 

@@ -3,13 +3,14 @@ package pasta
 import (
 	"HHELand"
 	"HHELand/sym/pasta"
+	"HHELand/utils"
 	"fmt"
 	"github.com/tuneinsight/lattigo/v6/core/rlwe"
 	"github.com/tuneinsight/lattigo/v6/schemes/bgv"
 )
 
 type HEPasta struct {
-	logger  HHESoK.Logger
+	logger  utils.Logger
 	fvPasta MFVPasta
 
 	params    Parameter
@@ -35,7 +36,7 @@ type HEPasta struct {
 
 func NewHEPasta() *HEPasta {
 	hePasta := &HEPasta{
-		logger:       HHESoK.NewLogger(HHESoK.DEBUG),
+		logger:       utils.NewLogger(utils.DEBUG),
 		params:       Parameter{},
 		symParams:    pasta.Parameter{},
 		fvPasta:      nil,
@@ -69,7 +70,7 @@ func (pas *HEPasta) InitParams(params Parameter, symParams pasta.Parameter) {
 		LogP:             []int{57, 57, 55, 55, 53, 53, 51, 51, 47, 47},
 		PlaintextModulus: params.plainMod,
 	})
-	HHESoK.HandleError(err)
+	utils.HandleError(err)
 	pas.bfvParams = fvParams
 }
 
@@ -107,7 +108,7 @@ func (pas *HEPasta) CreateGaloisKeys(dataSize int) {
 	pas.fvPasta.UpdateEvaluator(pas.evaluator)
 }
 
-func (pas *HEPasta) EncryptSymKey(key HHESoK.Key) {
+func (pas *HEPasta) EncryptSymKey(key HHELand.Key) {
 	pas.symKeyCt = pas.fvPasta.EncKey(key)
 	pas.logger.PrintMessages(">> Symmetric Key #slots: ", pas.symKeyCt.Slots())
 }
@@ -122,6 +123,6 @@ func (pas *HEPasta) Decrypt(ciphertext *rlwe.Ciphertext) (res []uint64) {
 	tmp := make([]uint64, pas.bfvParams.MaxSlots())
 	pt := pas.decryptor.DecryptNew(ciphertext)
 	err := pas.encoder.Decode(pt, tmp)
-	HHESoK.HandleError(err)
+	utils.HandleError(err)
 	return tmp[:pas.symParams.GetBlockSize()]
 }

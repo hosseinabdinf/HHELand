@@ -2,31 +2,31 @@ package hera
 
 import (
 	"HHELand"
-	"HHELand/rtf_ckks_integration/ckks_fv"
+	RtF "HHELand/rtf_integration"
 	"golang.org/x/crypto/sha3"
 )
 
 type Hera interface {
 	NewEncryptor() Encryptor
-	KeyStream(nonce []byte) HHESoK.Block
+	KeyStream(nonce []byte) HHELand.Block
 }
 
 type hera struct {
 	params    Parameter
 	shake     sha3.ShakeHash
-	secretKey HHESoK.Key
-	state     HHESoK.Block
-	rcs       HHESoK.Matrix
+	secretKey HHELand.Key
+	state     HHELand.Block
+	rcs       HHELand.Matrix
 	p         uint64
 }
 
 // NewHera return a new instance of Hera cipher
-func NewHera(secretKey HHESoK.Key, params Parameter) Hera {
+func NewHera(secretKey HHELand.Key, params Parameter) Hera {
 	if len(secretKey) != params.GetBlockSize() {
 		panic("Invalid Key Length!")
 	}
 
-	state := make(HHESoK.Block, params.GetBlockSize())
+	state := make(HHELand.Block, params.GetBlockSize())
 	her := &hera{
 		params:    params,
 		shake:     nil,
@@ -42,7 +42,7 @@ func (her *hera) NewEncryptor() Encryptor {
 	return &encryptor{her: *her}
 }
 
-func (her *hera) KeyStream(nonce []byte) (ks HHESoK.Block) {
+func (her *hera) KeyStream(nonce []byte) (ks HHELand.Block) {
 	// init Shake256
 	her.initShake(nonce)
 	// init state with values between 1 and BlockSize
@@ -93,7 +93,7 @@ func (her *hera) generateRCs() {
 	for r := 0; r <= rounds; r++ {
 		rcs[r] = make([]uint64, blockSize)
 		for i := 0; i < blockSize; i++ {
-			rcs[r][i] = ckks_fv.SampleZqx(her.shake, p) * key[i] % p
+			rcs[r][i] = RtF.SampleZqx(her.shake, p) * key[i] % p
 		}
 	}
 	her.rcs = rcs

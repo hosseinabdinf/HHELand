@@ -2,15 +2,15 @@ package rubato
 
 import (
 	"HHELand"
-	ckks "HHELand/rtf_ckks_integration/ckks_fv"
-	"HHELand/rtf_ckks_integration/utils"
+	ckks "HHELand/rtf_integration/ckks_fv"
+	"HHELand/rtf_integration/utils"
 	"HHELand/sym/rubato"
 	"crypto/rand"
 	"math"
 )
 
 type HERubato struct {
-	logger          HHESoK.Logger
+	logger          HHELand.Logger
 	paramIndex      int
 	params          *ckks.Parameters
 	symParams       rubato.Parameter
@@ -45,7 +45,7 @@ type HERubato struct {
 
 func NewHERubato() *HERubato {
 	rubato := &HERubato{
-		logger:          HHESoK.NewLogger(HHESoK.DEBUG),
+		logger:          utils.NewLogger(utils.DEBUG),
 		paramIndex:      0,
 		params:          nil,
 		symParams:       rubato.Parameter{},

@@ -2,13 +2,14 @@ package rubato
 
 import (
 	"HHELand"
+	"HHELand/utils"
 	"encoding/binary"
 	"math"
 )
 
 type Encryptor interface {
-	Encrypt(plaintext HHESoK.Plaintext) HHESoK.Ciphertext
-	Decrypt(ciphertext HHESoK.Ciphertext) HHESoK.Plaintext
+	Encrypt(plaintext HHELand.Plaintext) HHELand.Ciphertext
+	Decrypt(ciphertext HHELand.Ciphertext) HHELand.Plaintext
 }
 
 type encryptor struct {
@@ -16,8 +17,8 @@ type encryptor struct {
 }
 
 // Encrypt plaintext vector
-func (enc encryptor) Encrypt(plaintext HHESoK.Plaintext) HHESoK.Ciphertext {
-	logger := HHESoK.NewLogger(HHESoK.DEBUG)
+func (enc encryptor) Encrypt(plaintext HHELand.Plaintext) HHELand.Ciphertext {
+	logger := utils.NewLogger(utils.DEBUG)
 	var size = len(plaintext)
 	var modulus = enc.rub.params.GetModulus()
 	var ksSize = enc.rub.params.GetBlockSize() - 4
@@ -34,11 +35,11 @@ func (enc encryptor) Encrypt(plaintext HHESoK.Plaintext) HHESoK.Ciphertext {
 	}
 	counter := make([]byte, 8)
 
-	ciphertext := make(HHESoK.Ciphertext, size)
+	ciphertext := make(HHELand.Ciphertext, size)
 	copy(ciphertext, plaintext)
 
 	for i := 0; i < numBlock; i++ {
-		z := make(HHESoK.Block, ksSize)
+		z := make(HHELand.Block, ksSize)
 		binary.BigEndian.PutUint64(counter, uint64(i+1))
 		copy(z, enc.rub.KeyStream(nonces[i], counter))
 		ciphertext[i] = (ciphertext[i] + z[i]) % modulus
@@ -48,8 +49,8 @@ func (enc encryptor) Encrypt(plaintext HHESoK.Plaintext) HHESoK.Ciphertext {
 }
 
 // Decrypt ciphertext vector
-func (enc encryptor) Decrypt(ciphertext HHESoK.Ciphertext) HHESoK.Plaintext {
-	logger := HHESoK.NewLogger(HHESoK.DEBUG)
+func (enc encryptor) Decrypt(ciphertext HHELand.Ciphertext) HHELand.Plaintext {
+	logger := utils.NewLogger(utils.DEBUG)
 	var size = len(ciphertext)
 	var modulus = enc.rub.params.GetModulus()
 	var ksSize = enc.rub.params.GetBlockSize() - 4
@@ -66,11 +67,11 @@ func (enc encryptor) Decrypt(ciphertext HHESoK.Ciphertext) HHESoK.Plaintext {
 	}
 	counter := make([]byte, 8)
 
-	plaintext := make(HHESoK.Plaintext, size)
+	plaintext := make(HHELand.Plaintext, size)
 	copy(plaintext, ciphertext)
 
 	for i := 0; i < numBlock; i++ {
-		z := make(HHESoK.Block, ksSize)
+		z := make(HHELand.Block, ksSize)
 		binary.BigEndian.PutUint64(counter, uint64(i+1))
 		copy(z, enc.rub.KeyStream(nonces[i], counter))
 		if z[i] > plaintext[i] {

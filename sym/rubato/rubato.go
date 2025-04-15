@@ -2,34 +2,34 @@ package rubato
 
 import (
 	"HHELand"
-	"HHELand/rtf_ckks_integration/ckks_fv"
-	"HHELand/rtf_ckks_integration/ring"
-	"HHELand/rtf_ckks_integration/utils"
+	"HHELand/rtf_integration"
+	"HHELand/rtf_integration/ring"
+	"github.com/tuneinsight/lattigo/v6/utils/sampling"
 	"golang.org/x/crypto/sha3"
 )
 
 type Rubato interface {
 	NewEncryptor() Encryptor
-	KeyStream(nonce []byte, counter []byte) HHESoK.Block
+	KeyStream(nonce []byte, counter []byte) HHELand.Block
 }
 
 type rubato struct {
 	params    Parameter
 	shake     sha3.ShakeHash
-	secretKey HHESoK.Key
-	state     HHESoK.Block
-	rcs       HHESoK.Matrix
+	secretKey HHELand.Key
+	state     HHELand.Block
+	rcs       HHELand.Matrix
 	p         uint64
 	sampler   *ring.GaussianSampler
 }
 
 // NewRubato return a new instance of Rubato cipher
-func NewRubato(secretKey HHESoK.Key, params Parameter) Rubato {
+func NewRubato(secretKey HHELand.Key, params Parameter) Rubato {
 	if len(secretKey) != params.GetBlockSize() {
 		panic("Invalid Key Length!")
 	}
 
-	state := make(HHESoK.Block, params.GetBlockSize())
+	state := make(HHELand.Block, params.GetBlockSize())
 	rub := &rubato{
 		params:    params,
 		shake:     nil,
@@ -47,7 +47,7 @@ func (rub *rubato) NewEncryptor() Encryptor {
 }
 
 // KeyStream returns a vector of [BlockSize - 4][uint64] elements as key stream
-func (rub *rubato) KeyStream(nonce []byte, counter []byte) (ks HHESoK.Block) {
+func (rub *rubato) KeyStream(nonce []byte, counter []byte) (ks HHELand.Block) {
 	p := rub.params.GetModulus()
 	rounds := rub.params.GetRounds()
 	blockSize := rub.params.GetBlockSize()
@@ -105,7 +105,7 @@ func (rub *rubato) initShake(nonce []byte, counter []byte) {
 }
 
 func (rub *rubato) initGuSampler() {
-	prng, err := utils.NewPRNG()
+	prng, err := sampling.NewPRNG()
 	if err != nil {
 		panic(err)
 	}
@@ -118,11 +118,11 @@ func (rub *rubato) generateRCs() {
 	p := rub.params.GetModulus()
 	rounds := rub.params.GetRounds()
 	// generate round constant and then calculate rc = rc * k % p for ARK function
-	rcs := make(HHESoK.Matrix, rounds+1)
+	rcs := make(HHELand.Matrix, rounds+1)
 	for r := 0; r <= rounds; r++ {
 		rcs[r] = make([]uint64, blockSize)
 		for i := 0; i < blockSize; i++ {
-			rcs[r][i] = ckks_fv.SampleZqx(rub.shake, p) * key[i] % p
+			rcs[r][i] = RtF.SampleZqx(rub.shake, p) * key[i] % p
 		}
 	}
 	rub.rcs = rcs
@@ -131,7 +131,7 @@ func (rub *rubato) generateRCs() {
 func (rub *rubato) linearLayer() {
 	blockSize := len(rub.state)
 	p := rub.params.GetModulus()
-	buf := make(HHESoK.Block, blockSize)
+	buf := make(HHELand.Block, blockSize)
 
 	if blockSize == 16 {
 		// MixColumns
@@ -216,7 +216,7 @@ func (rub *rubato) linearLayer() {
 func (rub *rubato) sBoxFeistel() {
 	p := rub.params.GetModulus()
 	blockSize := rub.params.GetBlockSize()
-	buf := make(HHESoK.Block, blockSize)
+	buf := make(HHELand.Block, blockSize)
 
 	for i := 0; i < blockSize; i++ {
 		buf[i] = rub.state[i]

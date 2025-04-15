@@ -1,7 +1,7 @@
 package rubato
 
 import (
-	ckks "HHELand/rtf_ckks_integration/ckks_fv"
+	ckks "HHELand/rtf_integration/ckks_fv"
 	"HHELand/sym/rubato"
 	"encoding/binary"
 	"fmt"

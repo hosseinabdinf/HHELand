@@ -1,9 +1,10 @@
 package pasta
 
 import (
-	"HHELand"
+	"HHELand/utils"
 	"encoding/binary"
 	"fmt"
+	"github.com/tuneinsight/lattigo/v6/core/rlwe"
 	"testing"
 )
 
@@ -37,7 +38,7 @@ func benchHEPasta(tc TestContext, b *testing.B) {
 		b.Skip("skipping benchmark in short mode.")
 	}
 
-	logger := HHESoK.NewLogger(HHESoK.DEBUG)
+	logger := utils.NewLogger(utils.DEBUG)
 	logger.PrintDataLen(tc.Key)
 
 	hePasta := NewHEPasta()

@@ -20,7 +20,7 @@ func benchmarkRubato(tc *TestContext, b *testing.B) {
 
 	var rubatoCipher Rubato
 	var encryptor Encryptor
-	var newCiphertext HHESoK.Ciphertext
+	var newCiphertext HHELand.Ciphertext
 
 	b.Run("Rubato/NewRubato", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {

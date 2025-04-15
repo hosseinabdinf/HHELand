@@ -2,14 +2,15 @@ package hera
 
 import (
 	"HHELand"
+	"HHELand/utils"
 	"encoding/binary"
 	"math"
 )
 
 type Encryptor interface {
-	Encrypt(plaintext HHESoK.Plaintext) HHESoK.Ciphertext
-	Decrypt(ciphertext HHESoK.Ciphertext) HHESoK.Plaintext
-	KeyStream(size int) HHESoK.Matrix
+	Encrypt(plaintext HHELand.Plaintext) HHELand.Ciphertext
+	Decrypt(ciphertext HHELand.Ciphertext) HHELand.Plaintext
+	KeyStream(size int) HHELand.Matrix
 }
 
 type encryptor struct {
@@ -17,8 +18,8 @@ type encryptor struct {
 }
 
 // Encrypt plaintext
-func (enc encryptor) Encrypt(plaintext HHESoK.Plaintext) HHESoK.Ciphertext {
-	logger := HHESoK.NewLogger(HHESoK.DEBUG)
+func (enc encryptor) Encrypt(plaintext HHELand.Plaintext) HHELand.Ciphertext {
+	logger := utils.NewLogger(utils.DEBUG)
 	var size = len(plaintext)
 	var modulus = enc.her.params.GetModulus()
 	var blockSize = enc.her.params.GetBlockSize()
@@ -34,11 +35,11 @@ func (enc encryptor) Encrypt(plaintext HHESoK.Plaintext) HHESoK.Ciphertext {
 		binary.BigEndian.PutUint64(nonces[i], uint64(i+n))
 	}
 
-	ciphertext := make(HHESoK.Ciphertext, size)
+	ciphertext := make(HHELand.Ciphertext, size)
 	copy(ciphertext, plaintext)
 
 	for i := 0; i < numBlock; i++ {
-		z := make(HHESoK.Block, blockSize)
+		z := make(HHELand.Block, blockSize)
 		copy(z, enc.her.KeyStream(nonces[i]))
 		ciphertext[i] = (ciphertext[i] + z[i]) % modulus
 	}
@@ -47,8 +48,8 @@ func (enc encryptor) Encrypt(plaintext HHESoK.Plaintext) HHESoK.Ciphertext {
 }
 
 // Decrypt ciphertext
-func (enc encryptor) Decrypt(ciphertext HHESoK.Ciphertext) HHESoK.Plaintext {
-	logger := HHESoK.NewLogger(HHESoK.DEBUG)
+func (enc encryptor) Decrypt(ciphertext HHELand.Ciphertext) HHELand.Plaintext {
+	logger := utils.NewLogger(utils.DEBUG)
 
 	var size = len(ciphertext)
 	var modulus = enc.her.params.GetModulus()
@@ -65,11 +66,11 @@ func (enc encryptor) Decrypt(ciphertext HHESoK.Ciphertext) HHESoK.Plaintext {
 		binary.BigEndian.PutUint64(nonces[i], uint64(i+n))
 	}
 
-	plaintext := make(HHESoK.Plaintext, size)
+	plaintext := make(HHELand.Plaintext, size)
 	copy(plaintext, ciphertext)
 
 	for i := 0; i < numBlock; i++ {
-		z := make(HHESoK.Block, blockSize)
+		z := make(HHELand.Block, blockSize)
 		copy(z, enc.her.KeyStream(nonces[i]))
 
 		if z[i] > plaintext[i] {
@@ -82,8 +83,8 @@ func (enc encryptor) Decrypt(ciphertext HHESoK.Ciphertext) HHESoK.Plaintext {
 }
 
 // KeyStream takes len(plaintext) as input and generate a KeyStream
-func (enc encryptor) KeyStream(size int) (keyStream HHESoK.Matrix) {
-	logger := HHESoK.NewLogger(HHESoK.DEBUG)
+func (enc encryptor) KeyStream(size int) (keyStream HHELand.Matrix) {
+	logger := utils.NewLogger(utils.DEBUG)
 
 	blockSize := enc.her.params.GetBlockSize()
 	numBlock := int(math.Ceil(float64(size / blockSize)))
@@ -98,7 +99,7 @@ func (enc encryptor) KeyStream(size int) (keyStream HHESoK.Matrix) {
 	}
 
 	// generate key stream
-	keyStream = make(HHESoK.Matrix, numBlock)
+	keyStream = make(HHELand.Matrix, numBlock)
 	for i := 0; i < numBlock; i++ {
 		copy(keyStream[i], enc.her.KeyStream(nonces[i]))
 	}

@@ -20,7 +20,7 @@ func benchmarkHera(tc *TestContext, b *testing.B) {
 
 	var heraCipher Hera
 	var encryptor Encryptor
-	var newCiphertext HHESoK.Ciphertext
+	var newCiphertext HHELand.Ciphertext
 
 	b.Run("HERA/NewHera", func(b *testing.B) {
 		for i := 0; i < b.N; i++ {

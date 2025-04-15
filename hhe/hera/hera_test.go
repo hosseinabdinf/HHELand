@@ -1,7 +1,7 @@
 package hera
 
 import (
-	"HHELand/rtf_ckks_integration/ckks_fv"
+	"HHELand/rtf_integration"
 	"HHELand/sym/hera"
 	"fmt"
 	"math"
@@ -105,7 +105,7 @@ func testHEHera(t *testing.T, tc hera.TestContext) {
 	heHera.ScaleCiphertext(fvKeyStreams)
 	lg.PrintMemUsage("ScaleCiphertext")
 
-	var ctBoot *ckks_fv.Ciphertext
+	var ctBoot *RtF.Ciphertext
 	ctBoot = heHera.HalfBoot()
 	lg.PrintMemUsage("HalfBoot")
 
@@ -119,7 +119,7 @@ func testHEHera(t *testing.T, tc hera.TestContext) {
 		heHera.ckksDecryptor, heHera.ckksEncoder)
 }
 
-func printDebug(params *ckks_fv.Parameters, ciphertext *ckks_fv.Ciphertext, valuesWant []complex128, decryptor ckks_fv.CKKSDecryptor, encoder ckks_fv.CKKSEncoder) {
+func printDebug(params *RtF.Parameters, ciphertext *RtF.Ciphertext, valuesWant []complex128, decryptor RtF.CKKSDecryptor, encoder RtF.CKKSEncoder) {
 	valuesTest := encoder.DecodeComplex(decryptor.DecryptNew(ciphertext), params.LogSlots())
 	logSlots := params.LogSlots()
 	sigma := params.Sigma()
@@ -127,6 +127,6 @@ func printDebug(params *ckks_fv.Parameters, ciphertext *ckks_fv.Ciphertext, valu
 	fmt.Printf("Scale: 2^%f\n", math.Log2(ciphertext.Scale()))
 	fmt.Printf("ValuesTest: %6.10f %6.10f %6.10f %6.10f...\n", valuesTest[0], valuesTest[1], valuesTest[2], valuesTest[3])
 	fmt.Printf("ValuesWant: %6.10f %6.10f %6.10f %6.10f...\n", valuesWant[0], valuesWant[1], valuesWant[2], valuesWant[3])
-	precisionState := ckks_fv.GetPrecisionStats(params, encoder, nil, valuesWant, valuesTest, logSlots, sigma)
+	precisionState := RtF.GetPrecisionStats(params, encoder, nil, valuesWant, valuesTest, logSlots, sigma)
 	fmt.Println(precisionState.String())
 }

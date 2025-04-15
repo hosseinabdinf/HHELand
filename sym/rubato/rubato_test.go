@@ -2,6 +2,7 @@ package rubato
 
 import (
 	"HHELand"
+	"HHELand/utils"
 	"fmt"
 	"testing"
 )
@@ -12,12 +13,12 @@ func testString(opName string, p Parameter) string {
 }
 
 func TestRubato(t *testing.T) {
-	logger := HHESoK.NewLogger(HHESoK.DEBUG)
+	logger := utils.NewLogger(utils.DEBUG)
 	for _, tc := range TestsVector {
 		fmt.Println(testString("Rubato", tc.Params))
 		rubatoCipher := NewRubato(tc.Key, tc.Params)
 		encryptor := rubatoCipher.NewEncryptor()
-		var ciphertext HHESoK.Ciphertext
+		var ciphertext HHELand.Ciphertext
 
 		t.Run("RubatoEncryptionTest", func(t *testing.T) {
 			ciphertext = encryptor.Encrypt(tc.Plaintext)
