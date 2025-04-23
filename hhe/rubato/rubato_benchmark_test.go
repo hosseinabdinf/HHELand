@@ -1,7 +1,7 @@
 package rubato
 
 import (
-	"HHELand/rtf_integration/ckks_fv"
+	RtF "HHELand/rtf_integration"
 	"HHELand/sym/rubato"
 	"crypto/rand"
 	"fmt"
@@ -9,13 +9,13 @@ import (
 )
 
 func BenchmarkRubato(b *testing.B) {
-	// comment below loop if you want to go over each testcase manually
-	// it helps to get benchmark results when there's memory limit in
+	// comment below loop if you want to go over each testcase manually,
+	// it helps to get benchmark results when there's a memory limit in
 	// your test environment
 	for _, tc := range rubato.TestsVector {
 		benchHERubato(tc, b)
 	}
-	// uncomment following line if you want to use manual test case
+	// uncomment following line if you want to use the manual test case,
 	// you can choose test cased from [0-2]
 	// benchHERubato(rubato.TestsVector[2], b)
 }
@@ -95,7 +95,7 @@ func benchHERubato(tc rubato.TestContext, b *testing.B) {
 	})
 
 	// get BFV key stream using encrypted symmetric key, nonce, and counter on the server side
-	var fvKeyStreams []*ckks_fv.Ciphertext
+	var fvKeyStreams []*RtF.Ciphertext
 	b.Run("Rubato/FVKeyStream", func(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {

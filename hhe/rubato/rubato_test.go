@@ -1,7 +1,7 @@
 package rubato
 
 import (
-	ckks "HHELand/rtf_integration/ckks_fv"
+	RtF "HHELand/rtf_integration"
 	"HHELand/sym/rubato"
 	"encoding/binary"
 	"fmt"
@@ -101,8 +101,8 @@ func testHERubato(t *testing.T, tc rubato.TestContext) {
 		heRubato.ckksDecryptor, heRubato.ckksEncoder)
 }
 
-func printDebug(params *ckks.Parameters, ciphertext *ckks.Ciphertext,
-	valuesWant []complex128, decryptor ckks.CKKSDecryptor, encoder ckks.CKKSEncoder) {
+func printDebug(params *RtF.Parameters, ciphertext *RtF.Ciphertext,
+	valuesWant []complex128, decryptor RtF.CKKSDecryptor, encoder RtF.CKKSEncoder) {
 
 	valuesTest := encoder.DecodeComplex(decryptor.DecryptNew(ciphertext), params.LogSlots())
 	logSlots := params.LogSlots()
@@ -113,7 +113,7 @@ func printDebug(params *ckks.Parameters, ciphertext *ckks.Ciphertext,
 	fmt.Printf("ValuesTest: %6.10f %6.10f %6.10f %6.10f...\n", valuesTest[0], valuesTest[1], valuesTest[2], valuesTest[3])
 	fmt.Printf("ValuesWant: %6.10f %6.10f %6.10f %6.10f...\n", valuesWant[0], valuesWant[1], valuesWant[2], valuesWant[3])
 
-	precStats := ckks.GetPrecisionStats(params, encoder, nil, valuesWant, valuesTest, logSlots, sigma)
+	precStats := RtF.GetPrecisionStats(params, encoder, nil, valuesWant, valuesTest, logSlots, sigma)
 
 	fmt.Println(precStats.String())
 }

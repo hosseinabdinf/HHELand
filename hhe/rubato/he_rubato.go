@@ -1,46 +1,45 @@
 package rubato
 
 import (
-	"HHELand"
-	ckks "HHELand/rtf_integration/ckks_fv"
-	"HHELand/rtf_integration/utils"
+	RtF "HHELand/rtf_integration"
 	"HHELand/sym/rubato"
+	"HHELand/utils"
 	"crypto/rand"
 	"math"
 )
 
 type HERubato struct {
-	logger          HHELand.Logger
+	logger          utils.Logger
 	paramIndex      int
-	params          *ckks.Parameters
+	params          *RtF.Parameters
 	symParams       rubato.Parameter
-	hbtp            *ckks.HalfBootstrapper
-	hbtpParams      *ckks.HalfBootParameters
-	keyGenerator    ckks.KeyGenerator
-	fvEncoder       ckks.MFVEncoder
-	ckksEncoder     ckks.CKKSEncoder
-	ckksDecryptor   ckks.CKKSDecryptor
-	sk              *ckks.SecretKey
-	pk              *ckks.PublicKey
-	fvEncryptor     ckks.MFVEncryptor
-	fvEvaluator     ckks.MFVEvaluator
-	plainCKKSRingTs []*ckks.PlaintextRingT
-	plaintexts      []*ckks.Plaintext
+	hbtp            *RtF.HalfBootstrapper
+	hbtpParams      *RtF.HalfBootParameters
+	keyGenerator    RtF.KeyGenerator
+	fvEncoder       RtF.MFVEncoder
+	ckksEncoder     RtF.CKKSEncoder
+	ckksDecryptor   RtF.CKKSDecryptor
+	sk              *RtF.SecretKey
+	pk              *RtF.PublicKey
+	fvEncryptor     RtF.MFVEncryptor
+	fvEvaluator     RtF.MFVEvaluator
+	plainCKKSRingTs []*RtF.PlaintextRingT
+	plaintexts      []*RtF.Plaintext
 
-	fvRub          ckks.MFVRubato
+	fvRub          RtF.MFVRubato
 	messageScaling float64
 	rubatoModDown  []int
 	stcModDown     []int
-	pDcds          [][]*ckks.PtDiagMatrixT
-	rotkeys        *ckks.RotationKeySet
-	rlk            *ckks.RelinearizationKey
-	hbtpKey        ckks.BootstrappingKey
+	pDcds          [][]*RtF.PtDiagMatrixT
+	rotkeys        *RtF.RotationKeySet
+	rlk            *RtF.RelinearizationKey
+	hbtpKey        RtF.BootstrappingKey
 
 	N            int
 	outSize      int
 	coefficients [][]float64
-	symKeyCt     []*ckks.Ciphertext
-	ciphertext   *ckks.Ciphertext
+	symKeyCt     []*RtF.Ciphertext
+	ciphertext   *RtF.Ciphertext
 }
 
 func NewHERubato() *HERubato {
@@ -68,7 +67,7 @@ func NewHERubato() *HERubato {
 		pDcds:           nil,
 		rotkeys:         nil,
 		rlk:             nil,
-		hbtpKey:         ckks.BootstrappingKey{},
+		hbtpKey:         RtF.BootstrappingKey{},
 		N:               0,
 		outSize:         0,
 		coefficients:    nil,
@@ -83,7 +82,7 @@ func (hR *HERubato) InitParams(paramIndex int, symParams rubato.Parameter, plain
 	hR.paramIndex = paramIndex
 	hR.symParams = symParams
 	hR.outSize = symParams.BlockSize - 4
-	hR.hbtpParams = ckks.RtFRubatoParams[0] // using Rubato 128af
+	hR.hbtpParams = RtF.RtFRubatoParams[0] // using Rubato 128af
 	hR.params, err = hR.hbtpParams.Params()
 	if err != nil {
 		panic(err)
@@ -93,18 +92,18 @@ func (hR *HERubato) InitParams(paramIndex int, symParams rubato.Parameter, plain
 	hR.params.SetPlainModulus(symParams.GetModulus())
 	hR.params.SetLogFVSlots(hR.params.LogN())
 	hR.messageScaling = float64(hR.params.PlainModulus()) / hR.hbtpParams.MessageRatio
-	hR.rubatoModDown = ckks.RubatoModDownParams[paramIndex].CipherModDown
-	hR.stcModDown = ckks.RubatoModDownParams[paramIndex].StCModDown
+	hR.rubatoModDown = RtF.RubatoModDownParams[paramIndex].CipherModDown
+	hR.stcModDown = RtF.RubatoModDownParams[paramIndex].StCModDown
 }
 
 func (hR *HERubato) HEKeyGen() {
-	hR.keyGenerator = ckks.NewKeyGenerator(hR.params)
+	hR.keyGenerator = RtF.NewKeyGenerator(hR.params)
 	hR.sk, hR.pk = hR.keyGenerator.GenKeyPairSparse(hR.hbtpParams.H)
 
-	hR.fvEncoder = ckks.NewMFVEncoder(hR.params)
-	hR.ckksEncoder = ckks.NewCKKSEncoder(hR.params)
-	hR.fvEncryptor = ckks.NewMFVEncryptorFromPk(hR.params, hR.pk)
-	hR.ckksDecryptor = ckks.NewCKKSDecryptor(hR.params, hR.sk)
+	hR.fvEncoder = RtF.NewMFVEncoder(hR.params)
+	hR.ckksEncoder = RtF.NewCKKSEncoder(hR.params)
+	hR.fvEncryptor = RtF.NewMFVEncryptorFromPk(hR.params, hR.pk)
+	hR.ckksDecryptor = RtF.NewCKKSDecryptor(hR.params, hR.sk)
 }
 
 func (hR *HERubato) HalfBootKeyGen() {
@@ -115,18 +114,18 @@ func (hR *HERubato) HalfBootKeyGen() {
 	rotations := append(rotationsHalfBoot, rotationsStC...)
 	hR.rotkeys = hR.keyGenerator.GenRotationKeysForRotations(rotations, true, hR.sk)
 	hR.rlk = hR.keyGenerator.GenRelinearizationKey(hR.sk)
-	hR.hbtpKey = ckks.BootstrappingKey{Rlk: hR.rlk, Rtks: hR.rotkeys}
+	hR.hbtpKey = RtF.BootstrappingKey{Rlk: hR.rlk, Rtks: hR.rotkeys}
 }
 
 func (hR *HERubato) InitHalfBootstrapper() {
 	var err error
-	if hR.hbtp, err = ckks.NewHalfBootstrapper(hR.params, hR.hbtpParams, hR.hbtpKey); err != nil {
+	if hR.hbtp, err = RtF.NewHalfBootstrapper(hR.params, hR.hbtpParams, hR.hbtpKey); err != nil {
 		panic(err)
 	}
 }
 
 func (hR *HERubato) InitEvaluator() {
-	hR.fvEvaluator = ckks.NewMFVEvaluator(hR.params, ckks.EvaluationKey{Rlk: hR.rlk, Rtks: hR.rotkeys}, hR.pDcds)
+	hR.fvEvaluator = RtF.NewMFVEvaluator(hR.params, RtF.EvaluationKey{Rlk: hR.rlk, Rtks: hR.rotkeys}, hR.pDcds)
 }
 
 // InitCoefficients initialize the coefficient matrix
@@ -175,7 +174,7 @@ func (hR *HERubato) DataToCoefficients(data [][]float64) {
 
 // EncodeEncrypt Encode plaintext and Encrypt with key stream
 func (hR *HERubato) EncodeEncrypt(keystream [][]uint64) {
-	hR.plainCKKSRingTs = make([]*ckks.PlaintextRingT, hR.outSize)
+	hR.plainCKKSRingTs = make([]*RtF.PlaintextRingT, hR.outSize)
 	for s := 0; s < hR.outSize; s++ {
 		hR.plainCKKSRingTs[s] = hR.ckksEncoder.EncodeCoeffsRingTNew(hR.coefficients[s], hR.messageScaling)
 		poly := hR.plainCKKSRingTs[s].Value()[0]
@@ -187,15 +186,15 @@ func (hR *HERubato) EncodeEncrypt(keystream [][]uint64) {
 }
 
 func (hR *HERubato) ScaleUp() {
-	hR.plaintexts = make([]*ckks.Plaintext, hR.outSize)
+	hR.plaintexts = make([]*RtF.Plaintext, hR.outSize)
 	for s := 0; s < hR.outSize; s++ {
-		hR.plaintexts[s] = ckks.NewPlaintextFVLvl(hR.params, 0)
+		hR.plaintexts[s] = RtF.NewPlaintextFVLvl(hR.params, 0)
 		hR.fvEncoder.FVScaleUp(hR.plainCKKSRingTs[s], hR.plaintexts[s])
 	}
 }
 
-func (hR *HERubato) InitFvRubato() ckks.MFVRubato {
-	hR.fvRub = ckks.NewMFVRubato(hR.paramIndex, hR.params, hR.fvEncoder, hR.fvEncryptor,
+func (hR *HERubato) InitFvRubato() RtF.MFVRubato {
+	hR.fvRub = RtF.NewMFVRubato(hR.paramIndex, hR.params, hR.fvEncoder, hR.fvEncryptor,
 		hR.fvEvaluator, hR.rubatoModDown[0])
 	return hR.fvRub
 }
@@ -205,7 +204,7 @@ func (hR *HERubato) EncryptSymKey(key []uint64) {
 	hR.logger.PrintMessages(">> Symmetric Key Length: ", len(hR.symKeyCt))
 }
 
-func (hR *HERubato) GetFvKeyStreams(nonces [][]byte, counter []byte) []*ckks.Ciphertext {
+func (hR *HERubato) GetFvKeyStreams(nonces [][]byte, counter []byte) []*RtF.Ciphertext {
 	fvKeyStreams := hR.fvRub.Crypt(nonces, counter, hR.symKeyCt, hR.rubatoModDown)
 	for i := 0; i < hR.outSize; i++ {
 		hR.logger.PrintMessages(">> index: ", i)
@@ -215,8 +214,8 @@ func (hR *HERubato) GetFvKeyStreams(nonces [][]byte, counter []byte) []*ckks.Cip
 	return fvKeyStreams
 }
 
-func (hR *HERubato) ScaleCiphertext(fvKeyStreams []*ckks.Ciphertext) {
-	hR.ciphertext = ckks.NewCiphertextFVLvl(hR.params, 1, 0)
+func (hR *HERubato) ScaleCiphertext(fvKeyStreams []*RtF.Ciphertext) {
+	hR.ciphertext = RtF.NewCiphertextFVLvl(hR.params, 1, 0)
 	hR.ciphertext.Value()[0] = hR.plaintexts[0].Value()[0].CopyNew()
 	hR.fvEvaluator.Sub(hR.ciphertext, fvKeyStreams[0], hR.ciphertext)
 	hR.fvEvaluator.TransformToNTT(hR.ciphertext, hR.ciphertext)
@@ -240,8 +239,8 @@ func (hR *HERubato) ScaleCiphertext(fvKeyStreams []*ckks.Ciphertext) {
 // Difference from the bootstrapping is that the last StC is missing.
 // CAUTION: the scale of the ciphertext MUST be equal (or very close) to params.Scale
 // To equalize the scale, the function evaluator.SetScale(ciphertext, parameters.Scale) can be used at the expense of one level.
-func (hR *HERubato) HalfBoot() *ckks.Ciphertext {
-	var ctBoot *ckks.Ciphertext
+func (hR *HERubato) HalfBoot() *RtF.Ciphertext {
+	var ctBoot *RtF.Ciphertext
 	ctBoot, _ = hR.hbtp.HalfBoot(hR.ciphertext, false)
 	return ctBoot
 }

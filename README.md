@@ -10,7 +10,7 @@ Implementation for [The HHE Land: Exploring the Landscape of Hybrid Homomorphic 
 
 To test each symmetric cipher, navigate to its respective directory:
 
-    $ cd ./symcips/CNAME/
+    $ cd ./sym/CNAME/
 
 Then execute the following commands:
 
