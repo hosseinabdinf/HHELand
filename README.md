@@ -1,6 +1,6 @@
 # HHESoK
 
-Implementation for [The HHE Land: Exploring the Landscape of Hybrid Homomorphic Encryption](https://eprint.iacr.org/2025/071)
+Implementation for "The HHE Land: Exploring the Landscape of Hybrid Homomorphic Encryption."
 
 
 
@@ -53,13 +53,3 @@ available, from the following list:
     - Pasta4Pack:   PASTA cipher with 4 rounds    (full coefficient)
     - Hera:         HERA cipher                   (full coefficient)
     - Rubato:       Rubato cipher                 (full coefficient)
-
-## How to cite
-
-    @misc{cryptoeprint:2025/071,
-      author = {Hossein Abdinasibfar and Camille Nuoskala and Antonis Michalas},
-      title = {The {HHE} Land: Exploring the Landscape of Hybrid Homomorphic Encryption},
-      howpublished = {Cryptology {ePrint} Archive, Paper 2025/071},
-      year = {2025},
-      url = {https://eprint.iacr.org/2025/071}
-    }
